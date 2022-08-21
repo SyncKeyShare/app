@@ -6,9 +6,9 @@ let app = express();
 app.use(bodyParser.json()).use(cors());
 
 
-app.listen(8836, () => {
-    console.log("http://127.0.0.1:8836")
-});
+//app.listen(8836, () => {
+//    console.log("http://127.0.0.1:8836")
+//});
 
 module.exports = {
     post(path, fun) {
