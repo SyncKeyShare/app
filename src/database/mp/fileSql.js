@@ -1,4 +1,7 @@
 module.exports = {
+    initTable(dbRun){
+        return dbRun.run("create table if not exists file(file_id INTEGER not null primary key,file_name TEXT,file_content TEXT)");
+    },
     getTotal(dbRun) {
         return dbRun.get("select count(*) as count from file");
     },

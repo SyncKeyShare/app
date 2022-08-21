@@ -3,6 +3,14 @@ const FileP = require("../../pojo/fileP")
 let runDb = require('../../database/runDb');
 let fileSql = require('../../database/mp/fileSql');
 
+runDb({
+    success: (dbRun, close) => {
+        fileSql.initTable(dbRun).then(()=>{
+            close();
+        });
+    }
+})
+
 /**
  * 分页查询
  */
