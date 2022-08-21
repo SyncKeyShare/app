@@ -4,7 +4,7 @@
   "description": "A Node app with SQLite database, instantly up and running.",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon src/server.js"
+    "start": "node src/server.js"
   },
   "dependencies": {
     "body-parser": "^1.20.0",
