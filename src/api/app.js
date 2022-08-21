@@ -1,15 +1,18 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const fastify = require("fastify")({
+    logger: true,
+});
 
-let app = express();
-app.use(bodyParser.json()).use(cors());
-
-
-//app.listen(8836, () => {
-//    console.log("http://127.0.0.1:8836")
-//});
-
+// Run the server and report out to the logs
+fastify.listen({ port:8863, host: "0.0.0.0" },
+    function (err, address) {
+        if (err) {
+            fastify.log.error(err);
+            process.exit(1);
+        }
+        console.log(`Your app is listening on ${address}`);
+        fastify.log.info(`server listening on ${address}`);
+    }
+);
 module.exports = {
     post(path, fun) {
         apiFun({method: "post", path, fun});
@@ -29,8 +32,9 @@ module.exports = {
  * @param config.fun
  */
 function apiFun(config) {
-    app[config.method](config.path, (req, res) => {
+    fastify[config.method](config.path, (req, res) => {
         config.fun(req, (result) => {
+            console.log(result);
             let resultJson = {
                 data: {},
                 success: true,
@@ -49,7 +53,7 @@ function apiFun(config) {
                     resultJson.data = result.data;
                 }
             }
-            res.json(resultJson);
+            res.send(resultJson);
         });
     });
 }

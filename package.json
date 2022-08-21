@@ -7,12 +7,16 @@
     "start": "node src/server.js"
   },
   "dependencies": {
-    "body-parser": "^1.20.0",
-    "express": "^4.18.1",
     "fastify": "^4.2.1",
     "handlebars": "^4.7.7",
     "sqlite": "^4.1.1",
-    "sqlite3": "^5.0.9"
+    "sqlite3": "^5.0.9",
+    "@fastify/view": "^7.0.0",
+    "@fastify/static": "^6.4.1",
+    "@fastify/formbody": "^7.0.1"
+  },
+  "engines": {
+    "node": "14.x"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/hello-sqlite"
@@ -22,9 +26,5 @@
     "node",
     "glitch",
     "sqlite"
-  ],
-  "devDependencies": {
-    "cors": "^2.8.5",
-    "nodemon": "^2.0.19"
-  }
+  ]
 }

@@ -9,16 +9,17 @@ let fileSql = require('../../database/mp/fileSql');
 api.get("/file/page/", (req, fun) => {
     runDb({
         success: (dbRun, close) => {
+
             let thisPage = req.query.thisPage;
             let pageSize = req.query.pageSize;
             fileSql.getPage(dbRun, thisPage, pageSize).then(data => {
                 fileSql.getTotal(dbRun).then(total => {
+
                     fun({data: {total: total.count, records: data}});
+
                     close();
                 })
             })
-
-
         }
     })
 })
@@ -39,7 +40,6 @@ api.get("/file/:id",
             }
         })
     })
-
 /**
  * 添加
  */
