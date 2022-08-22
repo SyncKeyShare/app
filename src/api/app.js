@@ -3,7 +3,9 @@ const fastify = require("fastify")({
 });
 
 // Run the server and report out to the logs
-fastify.listen({port: 8863, host: "0.0.0.0"},
+fastify.listen(
+    {port: 8863, host: "0.0.0.0"},
+    // { port: process.env.PORT, host: "0.0.0.0" },
     function (err, address) {
         if (err) {
             fastify.log.error(err);
