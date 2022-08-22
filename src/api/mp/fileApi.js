@@ -22,8 +22,9 @@ api.get("/file/page/", (req, fun) => {
             let pageSize = req.query.pageSize;
             fileSql.getPage(dbRun, thisPage, pageSize).then(data => {
                 fileSql.getTotal(dbRun).then(total => {
-
-                    fun({data: {total: total.count, records: data}});
+                    let result = {data: {total: total.count, records: data}}
+                    console.log(result)
+                    fun(result);
 
                     close();
                 })
@@ -32,26 +33,11 @@ api.get("/file/page/", (req, fun) => {
     })
 })
 
-/**
- * 根据id查询
- */
-api.get("/file/:id",
-    (req, fun) => {
-        let fileP = new FileP();
-        fileP.file_id = req.params.id;
-        runDb({
-            success(dbRun, close) {
-                fileSql.findById(dbRun, fileP).then(data => {
-                    fun({data: data});
-                    close()
-                })
-            }
-        })
-    })
+
 /**
  * 添加
  */
-api.post("/file/add/", (req, fun) => {
+api.post("/file/add", (req, fun) => {
     let body = req.body;
     runDb({
         success(dbRun, close) {
@@ -70,9 +56,25 @@ api.post("/file/add/", (req, fun) => {
     })
 })
 /**
+ * 根据id查询
+ */
+api.get("/file/:id",
+    (req, fun) => {
+        let fileP = new FileP();
+        fileP.file_id = req.params.id;
+        runDb({
+            success(dbRun, close) {
+                fileSql.findById(dbRun, fileP).then(data => {
+                    fun({data: data});
+                    close()
+                })
+            }
+        })
+    })
+/**
  * 删除
  */
-api.del("/file/del/:id", (req, fun) => {
+api.del("/file/:id", (req, fun) => {
     let fileP = new FileP();
     fileP.file_id = req.params.id;
 

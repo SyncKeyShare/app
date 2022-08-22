@@ -3,7 +3,7 @@ const fastify = require("fastify")({
 });
 
 // Run the server and report out to the logs
-fastify.listen({ port:8863, host: "0.0.0.0" },
+fastify.listen({port: 8863, host: "0.0.0.0"},
     function (err, address) {
         if (err) {
             fastify.log.error(err);
@@ -22,6 +22,9 @@ module.exports = {
     },
     del(path, fun) {
         apiFun({method: "delete", path, fun})
+    },
+    options(path, fun) {
+        apiFun({method: "options", path, fun})
     }
 }
 
@@ -32,9 +35,17 @@ module.exports = {
  * @param config.fun
  */
 function apiFun(config) {
+
     fastify[config.method](config.path, (req, res) => {
         config.fun(req, (result) => {
-            console.log(result);
+            res.headers({
+                "Access-Control-Allow-Origin": "*",
+                // "Content-Type": "application/json;charset=UTF-8",
+                "Access-Control-Allow-Headers": "token,Content-Type",
+                "Access-Control-Allow-Methods": "*"
+            })
+            // if (config.method==="options") return;
+
             let resultJson = {
                 data: {},
                 success: true,
@@ -53,7 +64,7 @@ function apiFun(config) {
                     resultJson.data = result.data;
                 }
             }
-            res.send(resultJson);
+            res.send(JSON.stringify(resultJson));
         });
     });
 }
